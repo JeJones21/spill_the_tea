@@ -153,7 +153,7 @@
 * [System Dependencies]
     ```bash
     $ rails -v
-    Rails 6.1.4
+    Rails 5.7.2
     ```
 
 * Database Creation
@@ -165,7 +165,7 @@
     
 * How to run the test suite:
     ```bash
-    $ bundle exec rspec -fd
+    $ bundle exec rspec 
     ```
 
 * [Local Deployment](http://localhost:3000), for testing:
