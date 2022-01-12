@@ -1,4 +1,4 @@
-# Spill the Tea
+# Spill the Tea 🍵 🍵 🍵 🍵 🍵 🍵 🍵 🍵 🍵 🍵 🍵
 
 ![Image](https://media2.giphy.com/media/hQdWtl18ibA58nil8t/giphy.gif?cid=e3b0c4425cf1c48c445a667177356110&rid=giphy.gif)  
 [via GIPHY](https://media2.giphy.com/media/hQdWtl18ibA58nil8t/giphy.gif?cid=e3b0c4425cf1c48c445a667177356110&rid=giphy.gif)
@@ -37,9 +37,7 @@
 2. Install gem packages: `bundle install`
 3. Set up the database: `rails db:{drop,create,migrate,seed}`
 
-### Find the [project spec here](https://mod4.turing.edu/projects/take_home/take_home_be)
-
-### [Schema Design](https://dbdiagram.io)
+### [Schema Design]
 ![Screen Shot 2022-01-11 at 9 56 16 PM](https://user-images.githubusercontent.com/80985215/149055769-9fab9afd-370b-451a-a992-12c1b622c502.png)
 
 
