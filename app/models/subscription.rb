@@ -10,6 +10,10 @@ class Subscription < ApplicationRecord
     annually: 2
   }
 
-  validates_presence_of :title, :price, :status, :frequency,
-                        :customer_id, :tea_id
+  validates_presence_of :title,
+                        :price,
+                        :status,
+                        :frequency,
+                        :customer_id,
+                        :tea_id
 end
