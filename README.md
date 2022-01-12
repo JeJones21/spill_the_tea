@@ -1,5 +1,4 @@
-# Spill the Tea 🍵 🍵 🍵 🍵 🍵 🍵 🍵 🍵 🍵 🍵 🍵
-
+# 🫖 Spill the Tea 🫖
 ![Image](https://media2.giphy.com/media/hQdWtl18ibA58nil8t/giphy.gif?cid=e3b0c4425cf1c48c445a667177356110&rid=giphy.gif)  
 [via GIPHY](https://media2.giphy.com/media/hQdWtl18ibA58nil8t/giphy.gif?cid=e3b0c4425cf1c48c445a667177356110&rid=giphy.gif)
 
@@ -58,7 +57,7 @@
         "id": "9",
         "type": "subscription",
         "attributes": {
-            "title": "Sun Moon Lake",
+            "title": "Kick In The Chest",
             "price": 24.99,
             "status": "active",
             "frequency": "biannually",
@@ -82,7 +81,7 @@
         "id": "8",
         "type": "subscription",
         "attributes": {
-            "title": "Sun Moon Lake",
+            "title": "Kick In The Chest",
             "price": 24.99,
             "status": "cancelled",
             "frequency": "biannually",
@@ -107,7 +106,7 @@
             "id": "10",
             "type": "subscription",
             "attributes": {
-                "title": "Sun Moon Lake",
+                "title": "Kick In The Chest",
                 "price": 24.99,
                 "status": "active",
                 "frequency": "monthly",
@@ -119,7 +118,7 @@
             "id": "13",
             "type": "subscription",
             "attributes": {
-                "title": "Black Tea Mix",
+                "title": "Send Covid Packin",
                 "price": 24.99,
                 "status": "active",
                 "frequency": "biweekly",
@@ -131,7 +130,7 @@
             "id": "14",
             "type": "subscription",
             "attributes": {
-                "title": "Incredibly Delicious Tea",
+                "title": "Pass The Heck Out",
                 "price": 24.99,
                 "status": "active",
                 "frequency": "biweekly",
