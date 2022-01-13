@@ -1,6 +1,8 @@
 class SubscriptionsController < ApplicationController
   before_action :set_subscription, only: [:show, :update, :destroy]
-
+  before_action :find_customer
+  before_action :find_tea, only: %i[create]
+  
   # GET /subscriptions
   def index
     @subscriptions = Subscription.all
@@ -40,12 +42,26 @@ class SubscriptionsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_subscription
-      @subscription = Subscription.find(params[:id])
+  def set_subscription
+    @subscription = Subscription.find(params[:id])
+  end
+
+  def find_customer
+    @customer = Customer.find_by(id: params[:customer_id])
+    if @customer.nil?
+      render json: { errors: "Customer not found" }, status: :not_found
     end
+  end
+
+  def find_tea
+    @tea = Tea.find_by(id: params[:tea_id])
+    if @tea.nil?
+      render json: { errors: "Tea variety not found" }, status: :not_found
+    end
+  end
 
     # Only allow a trusted parameter "white list" through.
-    def subscription_params
-      params.require(:subscription).permit(:title, :price, :frequency, :status, :customer_id, :tea_id)
-    end
+  def subscription_params
+    params.require(:subscription).permit(:title, :price, :frequency, :status, :customer_id, :tea_id)
+  end
 end
