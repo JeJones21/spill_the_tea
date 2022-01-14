@@ -1,4 +1,4 @@
-class CustomersController < ApplicationController
+class Api::V1::CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :update, :destroy]
 
   # GET /customers
@@ -18,7 +18,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
 
     if @customer.save
-      render json: @customer, status: :created, location: @customer
+      render json: CustomerSerializer.new(@customer), status: :created
     else
       render json: @customer.errors, status: :unprocessable_entity
     end
@@ -41,7 +41,7 @@ class CustomersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_customer
-      @customer = Customer.find(params[:id])
+      @customer = Customer.find(id: params[:customer_id])
     end
 
     # Only allow a trusted parameter "white list" through.

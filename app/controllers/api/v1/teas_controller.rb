@@ -1,4 +1,4 @@
-class TeasController < ApplicationController
+class Api::V1::TeasController < ApplicationController
   before_action :set_tea, only: [:show, :update, :destroy]
 
   # GET /teas
@@ -18,7 +18,7 @@ class TeasController < ApplicationController
     @tea = Tea.new(tea_params)
 
     if @tea.save
-      render json: @tea, status: :created, location: @tea
+      render json: TeaSerializer, status: :created
     else
       render json: @tea.errors, status: :unprocessable_entity
     end

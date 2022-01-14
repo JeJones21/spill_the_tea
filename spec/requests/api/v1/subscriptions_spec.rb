@@ -16,13 +16,32 @@ RSpec.describe "/subscriptions", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Subscription. As you add validations to Subscription, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  before :each do
+    @tea = Tea.create!(title: "Drink UP", description: "Black Mud", temperature: 100, brew_time: 'hour')
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    @customer_1 = Customer.create!(first_name: "Just", last_name: "Jones", email: "email@email.com", address: "123 Address St")
+    @customer_2 = Customer.create!(first_name: "First 2", last_name: "Last 2", email: "email2@email.com", address: "234 Address St")
+
+  end
+  let(:valid_attributes) do
+    {
+    "title": "Subscription 1",
+     "price": "11.99",
+     "status": 0,
+     "frequency": 0,
+     "customer_id": @customer_1.id,
+     "tea_id": @tea.id
   }
+  end
+
+  let(:invalid_attributes) do
+    {
+    "title": "Subscription 1",
+     "price": "11.99",
+     "customer_id": 1,
+     "tea_id": 1
+  }
+end
 
   # This should return the minimal set of values that should be in the headers
   # in order to pass any filters (e.g. authentication) defined in
@@ -34,8 +53,9 @@ RSpec.describe "/subscriptions", type: :request do
 
   describe "GET /index" do
     it "renders a successful response" do
+      # require "pry"; binding.pry
       Subscription.create! valid_attributes
-      get subscriptions_url, headers: valid_headers, as: :json
+      get  "/api/v1/customers/#{@customer_1.id}/subscriptions" , headers: valid_headers, as: :json
       expect(response).to be_successful
     end
   end
@@ -43,7 +63,7 @@ RSpec.describe "/subscriptions", type: :request do
   describe "GET /show" do
     it "renders a successful response" do
       subscription = Subscription.create! valid_attributes
-      get subscription_url(subscription), as: :json
+      get  "/api/v1/customers/#{@customer_1.id}/subscriptions/#{subscription.id}", as: :json
       expect(response).to be_successful
     end
   end
@@ -52,15 +72,15 @@ RSpec.describe "/subscriptions", type: :request do
     context "with valid parameters" do
       it "creates a new Subscription" do
         expect {
-          post subscriptions_url,
+          post "/api/v1/customers/#{@customer_1.id}/subscriptions",
                params: { subscription: valid_attributes }, headers: valid_headers, as: :json
         }.to change(Subscription, :count).by(1)
       end
 
       it "renders a JSON response with the new subscription" do
-        post subscriptions_url,
+        post "/api/v1/customers/#{@customer_1.id}/subscriptions",
              params: { subscription: valid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:created)
+        expect(response).to be_successful
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
@@ -68,15 +88,15 @@ RSpec.describe "/subscriptions", type: :request do
     context "with invalid parameters" do
       it "does not create a new Subscription" do
         expect {
-          post subscriptions_url,
+          post "/api/v1/customers/#{@customer_1.id}/subscriptions",
                params: { subscription: invalid_attributes }, as: :json
         }.to change(Subscription, :count).by(0)
       end
 
       it "renders a JSON response with errors for the new subscription" do
-        post subscriptions_url,
+        post "/api/v1/customers/#{@customer_1.id}/subscriptions",
              params: { subscription: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to_not be_successful
         expect(response.content_type).to eq("application/json")
       end
     end
@@ -85,22 +105,29 @@ RSpec.describe "/subscriptions", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        valid_attributes = {
+          "title": "Subscription 2",
+           "price": "5.99",
+           "status": 0,
+           "frequency": 0,
+           "customer_id": 1,
+           "tea_id": 1
+        }
       }
 
       it "updates the requested subscription" do
         subscription = Subscription.create! valid_attributes
-        patch subscription_url(subscription),
+        patch  "/api/v1/customers/#{@customer_1.id}/subscriptions/#{subscription.id}",
               params: { subscription: new_attributes }, headers: valid_headers, as: :json
         subscription.reload
-        skip("Add assertions for updated state")
+        expect(response).to be_successful
       end
 
       it "renders a JSON response with the subscription" do
         subscription = Subscription.create! valid_attributes
-        patch subscription_url(subscription),
+        patch  "/api/v1/customers/#{@customer_1.id}/subscriptions/#{subscription.id}",
               params: { subscription: new_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:ok)
+        expect(response).to be_successful
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
@@ -108,9 +135,9 @@ RSpec.describe "/subscriptions", type: :request do
     context "with invalid parameters" do
       it "renders a JSON response with errors for the subscription" do
         subscription = Subscription.create! valid_attributes
-        patch subscription_url(subscription),
+        patch  "/api/v1/customers/#{@customer_1.id}/subscriptions/#{subscription.id}",
               params: { subscription: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to_not be_successful
         expect(response.content_type).to eq("application/json")
       end
     end
@@ -119,9 +146,8 @@ RSpec.describe "/subscriptions", type: :request do
   describe "DELETE /destroy" do
     it "destroys the requested subscription" do
       subscription = Subscription.create! valid_attributes
-      expect {
-        delete subscription_url(subscription), headers: valid_headers, as: :json
-      }.to change(Subscription, :count).by(-1)
+      delete  "/api/v1/customers/#{@customer_2.id}/subscriptions/#{subscription.id}", headers: valid_headers, as: :json
+      expect(Subscription.count).to eq(0)
     end
   end
 end

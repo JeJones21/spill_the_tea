@@ -12,13 +12,13 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/teas", type: :request do
+RSpec.describe "/customers", type: :request do
   # This should return the minimal set of attributes required to create a valid
-  # Tea. As you add validations to Tea, be sure to
+  # Customer. As you add validations to Customer, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     skip("Add a hash of attributes valid for your model")
-  }
+  end
 
   let(:invalid_attributes) {
     skip("Add a hash of attributes invalid for your model")
@@ -26,7 +26,7 @@ RSpec.describe "/teas", type: :request do
 
   # This should return the minimal set of values that should be in the headers
   # in order to pass any filters (e.g. authentication) defined in
-  # TeasController, or in your router and rack
+  # CustomersController, or in your router and rack
   # middleware. Be sure to keep this updated too.
   let(:valid_headers) {
     {}
@@ -34,48 +34,48 @@ RSpec.describe "/teas", type: :request do
 
   describe "GET /index" do
     it "renders a successful response" do
-      Tea.create! valid_attributes
-      get teas_url, headers: valid_headers, as: :json
+      Customer.create! valid_attributes
+      get "/api/v1/customers", headers: valid_headers, as: :json
       expect(response).to be_successful
     end
   end
 
   describe "GET /show" do
     it "renders a successful response" do
-      tea = Tea.create! valid_attributes
-      get tea_url(tea), as: :json
+      customer = Customer.create! valid_attributes
+      get "/api/v1/customers/#{customer.id}", as: :json
       expect(response).to be_successful
     end
   end
 
   describe "POST /create" do
     context "with valid parameters" do
-      it "creates a new Tea" do
+      it "creates a new Customer" do
         expect {
-          post teas_url,
-               params: { tea: valid_attributes }, headers: valid_headers, as: :json
-        }.to change(Tea, :count).by(1)
+          post "/api/v1/customers",
+               params: { customer: valid_attributes }, headers: valid_headers, as: :json
+        }.to change(Customer, :count).by(1)
       end
 
-      it "renders a JSON response with the new tea" do
-        post teas_url,
-             params: { tea: valid_attributes }, headers: valid_headers, as: :json
+      it "renders a JSON response with the new customer" do
+        post "/api/v1/customers",
+             params: { customer: valid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
 
     context "with invalid parameters" do
-      it "does not create a new Tea" do
+      it "does not create a new Customer" do
         expect {
-          post teas_url,
-               params: { tea: invalid_attributes }, as: :json
-        }.to change(Tea, :count).by(0)
+          post "/api/v1/customers",
+               params: { customer: invalid_attributes }, as: :json
+        }.to change(Customer, :count).by(0)
       end
 
-      it "renders a JSON response with errors for the new tea" do
-        post teas_url,
-             params: { tea: invalid_attributes }, headers: valid_headers, as: :json
+      it "renders a JSON response with errors for the new customer" do
+        post "/api/v1/customers",
+             params: { customer: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq("application/json")
       end
@@ -88,28 +88,28 @@ RSpec.describe "/teas", type: :request do
         skip("Add a hash of attributes valid for your model")
       }
 
-      it "updates the requested tea" do
-        tea = Tea.create! valid_attributes
-        patch tea_url(tea),
-              params: { tea: new_attributes }, headers: valid_headers, as: :json
-        tea.reload
+      it "updates the requested customer" do
+        customer = Customer.create! valid_attributes
+        patch "/api/v1/customers/#{customer.id}",
+              params: { customer: new_attributes }, headers: valid_headers, as: :json
+        customer.reload
         skip("Add assertions for updated state")
       end
 
-      it "renders a JSON response with the tea" do
-        tea = Tea.create! valid_attributes
-        patch tea_url(tea),
-              params: { tea: new_attributes }, headers: valid_headers, as: :json
+      it "renders a JSON response with the customer" do
+        customer = Customer.create! valid_attributes
+        patch "/api/v1/customers/#{customer.id}",
+              params: { customer: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
 
     context "with invalid parameters" do
-      it "renders a JSON response with errors for the tea" do
-        tea = Tea.create! valid_attributes
-        patch tea_url(tea),
-              params: { tea: invalid_attributes }, headers: valid_headers, as: :json
+      it "renders a JSON response with errors for the customer" do
+        customer = Customer.create! valid_attributes
+        patch "/api/v1/customers/#{customer.id}",
+              params: { customer: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq("application/json")
       end
@@ -117,11 +117,11 @@ RSpec.describe "/teas", type: :request do
   end
 
   describe "DELETE /destroy" do
-    it "destroys the requested tea" do
-      tea = Tea.create! valid_attributes
+    it "destroys the requested customer" do
+      customer = Customer.create! valid_attributes
       expect {
-        delete tea_url(tea), headers: valid_headers, as: :json
-      }.to change(Tea, :count).by(-1)
+        delete "/api/v1/customers/#{customer.id}", headers: valid_headers, as: :json
+      }.to change(Customer, :count).by(-1)
     end
   end
 end
