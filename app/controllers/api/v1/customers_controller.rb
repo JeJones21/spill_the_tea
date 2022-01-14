@@ -1,4 +1,4 @@
-class CustomersController < ApplicationController
+class Api::V1::CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :update, :destroy]
 
   # GET /customers
@@ -18,7 +18,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
 
     if @customer.save
-      render json: @customer, status: :created, location: @customer
+      render json: CustomerSerializer.new(@customer), status: :created
     else
       render json: @customer.errors, status: :unprocessable_entity
     end

@@ -1,13 +1,14 @@
-class SubscriptionsController < ApplicationController
-  before_action :set_subscription, only: [:show, :update, :destroy]
+class Api::V1::SubscriptionsController < ApplicationController
   before_action :find_customer
   before_action :find_tea, only: %i[create]
-  
+
   # GET /subscriptions
   def index
-    @subscriptions = Subscription.all
-
-    render json: @subscriptions
+    if @customer.subscriptions.count > 0
+     render json: SubscriptionSerializer.new(@customer.subscriptions), status: :created
+   else
+     render json: { errors: "No subscriptions found" }, status: 200
+   end
   end
 
   # GET /subscriptions/1
@@ -17,21 +18,17 @@ class SubscriptionsController < ApplicationController
 
   # POST /subscriptions
   def create
-    @subscription = Subscription.new(subscription_params)
-
-    if @subscription.save
-      render json: @subscription, status: :created, location: @subscription
-    else
-      render json: @subscription.errors, status: :unprocessable_entity
-    end
+    subscription = @customer.subscriptions.create!(subscription_params)
+    render json: SubscriptionSerializer.new(subscription), status: :created
   end
 
   # PATCH/PUT /subscriptions/1
   def update
-    if @subscription.update(subscription_params)
-      render json: @subscription
+    subscription = @customer.subscriptions.find(params[:id])
+     if subscription.update!(subscription_params)
+       render json: SubscriptionSerializer.new(subscription), status: :ok
     else
-      render json: @subscription.errors, status: :unprocessable_entity
+      render json: { errors: subscription.errors }
     end
   end
 
