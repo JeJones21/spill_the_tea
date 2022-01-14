@@ -34,7 +34,7 @@ class Api::V1::SubscriptionsController < ApplicationController
 
   # DELETE /subscriptions/1
   def destroy
-    @subscription.destroy
+    subscription.delete
   end
 
   private

@@ -16,9 +16,9 @@ RSpec.describe "/customers", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Customer. As you add validations to Customer, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     skip("Add a hash of attributes valid for your model")
-  }
+  end
 
   let(:invalid_attributes) {
     skip("Add a hash of attributes invalid for your model")
